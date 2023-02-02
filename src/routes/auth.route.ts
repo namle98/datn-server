@@ -6,9 +6,10 @@ const {
 
 const router = Router();
 //middlewares
-const { authCheck } = require("../middlewares/auth");
+const { authCheck, adminCheck } = require("../middlewares/auth");
 
 router.post("/create-or-update-user", authCheck, createOrUpdateUser);
 router.post("/current-user", authCheck, currentUser);
+router.post("/current-admin", authCheck, adminCheck, currentUser);
 
 export default router;

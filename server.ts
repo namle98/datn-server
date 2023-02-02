@@ -4,6 +4,7 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 import authRouter from "./src/routes/auth.route";
+import categoryRouter from "./src/routes/category.route";
 require("dotenv").config();
 
 //app
@@ -27,8 +28,8 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
 //routes mioddleware
-
 app.use("/api", authRouter);
+app.use("/api", categoryRouter);
 
 const port = process.env.PORT || 8080;
 
