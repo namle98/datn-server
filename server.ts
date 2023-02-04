@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import authRouter from "./src/routes/auth.route";
 import categoryRouter from "./src/routes/category.route";
+import subCategoryRouter from "./src/routes/subCategory.route";
 require("dotenv").config();
 
 //app
@@ -30,6 +31,7 @@ app.use(cors());
 //routes mioddleware
 app.use("/api", authRouter);
 app.use("/api", categoryRouter);
+app.use("/api", subCategoryRouter);
 
 const port = process.env.PORT || 8080;
 
