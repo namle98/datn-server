@@ -6,6 +6,7 @@ import cors from "cors";
 import authRouter from "./src/routes/auth.route";
 import categoryRouter from "./src/routes/category.route";
 import subCategoryRouter from "./src/routes/subCategory.route";
+import productRouter from "./src/routes/product.route";
 require("dotenv").config();
 
 //app
@@ -32,6 +33,7 @@ app.use(cors());
 app.use("/api", authRouter);
 app.use("/api", categoryRouter);
 app.use("/api", subCategoryRouter);
+app.use("/api", productRouter);
 
 const port = process.env.PORT || 8080;
 
