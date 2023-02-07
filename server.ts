@@ -8,6 +8,7 @@ import categoryRouter from "./src/routes/category.route";
 import subCategoryRouter from "./src/routes/subCategory.route";
 import productRouter from "./src/routes/product.route";
 import cloudinaryRouter from "./src/routes/cloudinary";
+import orderRouter from "./src/routes/admin.route";
 require("dotenv").config();
 
 //app
@@ -36,6 +37,7 @@ app.use("/api", categoryRouter);
 app.use("/api", subCategoryRouter);
 app.use("/api", productRouter);
 app.use("/api", cloudinaryRouter);
+app.use("/api", orderRouter);
 
 const port = process.env.PORT || 8080;
 

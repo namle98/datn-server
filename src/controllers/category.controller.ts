@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 const Category = require("../models/category.model");
 const Sub = require("../models/subCategory");
+const Product = require("../models/product.model");
 const slugify = require("slugify");
 
 module.exports = {
@@ -20,8 +21,16 @@ module.exports = {
     res.json(listCategories);
   },
   read: async function (req: Request, res: Response) {
-    let category = await Category.find({ slug: req.params.slug }).exec();
-    res.json(category);
+    let category = await Category.findOne({ slug: req.params.slug }).exec();
+    // res.json(category);
+    const products = await Product.find({ category })
+      .populate("category")
+      .exec();
+
+    res.json({
+      category,
+      products,
+    });
   },
   update: async function (req: Request, res: Response) {
     const { name } = req.body;

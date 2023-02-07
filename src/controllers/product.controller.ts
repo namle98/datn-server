@@ -208,7 +208,7 @@ module.exports = {
 
     // who is updating?
     // check if currently logged in user have already added rating to this product?
-    let existingRatingObject = product.ratings.find(
+    let existingRatingObject = product.ratings?.find(
       (ele: any) => ele.postedBy.toString() === user._id.toString()
     );
 
@@ -246,7 +246,7 @@ module.exports = {
       .limit(3)
       .populate("category")
       .populate("subs")
-      .populate("postedBy")
+      .populate("ratings.postedBy")
       .exec();
 
     res.json(related);
