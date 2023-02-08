@@ -8,9 +8,8 @@ const handleQuery = async (req: Request, res: Response, query: any) => {
   const products = await Product.find({ $text: { $search: query } })
     .populate("category", "_id name")
     .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("ratings.postedBy", "_id name")
     .exec();
-
   res.json(products);
 };
 
@@ -24,7 +23,7 @@ const handlePrice = async (req: Request, res: Response, price: any) => {
     })
       .populate("category", "_id name")
       .populate("subs", "_id name")
-      .populate("postedBy", "_id name")
+      .populate("ratings.postedBy", "_id name")
       .exec();
 
     res.json(products);
@@ -38,7 +37,7 @@ const handleCategory = async (req: Request, res: Response, category: any) => {
     let products = await Product.find({ category })
       .populate("category", "_id name")
       .populate("subs", "_id name")
-      .populate("postedBy", "_id name")
+      .populate("ratings.postedBy", "_id name")
       .exec();
 
     res.json(products);
@@ -66,7 +65,7 @@ const handleStar = (req: Request, res: Response, stars: any) => {
       Product.find({ _id: aggregates })
         .populate("category", "_id name")
         .populate("subs", "_id name")
-        .populate("postedBy", "_id name")
+        .populate("ratings.postedBy", "_id name")
         .exec((err: any, products: any) => {
           if (err) console.log("PRODUCT AGGREGATE ERROR", err);
           res.json(products);
@@ -78,7 +77,7 @@ const handleSub = async (req: Request, res: Response, sub: any) => {
   const products = await Product.find({ subs: sub })
     .populate("category", "_id name")
     .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("ratings.postedBy", "_id name")
     .exec();
 
   res.json(products);
@@ -88,7 +87,7 @@ const handleShipping = async (req: Request, res: Response, shipping: any) => {
   const products = await Product.find({ shipping })
     .populate("category", "_id name")
     .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("ratings.postedBy", "_id name")
     .exec();
 
   res.json(products);
@@ -98,7 +97,7 @@ const handleColor = async (req: Request, res: Response, color: any) => {
   const products = await Product.find({ color })
     .populate("category", "_id name")
     .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("ratings.postedBy", "_id name")
     .exec();
 
   res.json(products);
@@ -108,7 +107,43 @@ const handleBrand = async (req: Request, res: Response, brand: any) => {
   const products = await Product.find({ brand })
     .populate("category", "_id name")
     .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("ratings.postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+const handleChip = async (req: Request, res: Response, chip: any) => {
+  const products = await Product.find({ chip })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("ratings.postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+const handleDisplay = async (req: Request, res: Response, display: any) => {
+  const products = await Product.find({ display })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("ratings.postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+const handleRam = async (req: Request, res: Response, ram: any) => {
+  const products = await Product.find({ ram })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("ratings.postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+const handleRom = async (req: Request, res: Response, rom: any) => {
+  const products = await Product.find({ rom })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("ratings.postedBy", "_id name")
     .exec();
 
   res.json(products);
@@ -252,8 +287,20 @@ module.exports = {
     res.json(related);
   },
   searchFilters: async function (req: Request, res: Response) {
-    const { query, price, category, stars, sub, shipping, color, brand } =
-      req.body;
+    const {
+      query,
+      price,
+      category,
+      stars,
+      sub,
+      shipping,
+      color,
+      brand,
+      chip,
+      ram,
+      rom,
+      display,
+    } = req.body;
 
     if (query) {
       console.log("query --->", query);
@@ -294,6 +341,22 @@ module.exports = {
     if (brand) {
       console.log("brand ---> ", brand);
       await handleBrand(req, res, brand);
+    }
+    if (chip) {
+      console.log("chip ---> ", chip);
+      await handleChip(req, res, chip);
+    }
+    if (display) {
+      console.log("display ---> ", display);
+      await handleDisplay(req, res, display);
+    }
+    if (ram) {
+      console.log("ram ---> ", ram);
+      await handleRam(req, res, ram);
+    }
+    if (rom) {
+      console.log("rom ---> ", rom);
+      await handleRom(req, res, rom);
     }
   },
 };

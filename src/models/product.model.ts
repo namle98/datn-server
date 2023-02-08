@@ -58,6 +58,32 @@ const productSchema = new mongoose.Schema(
       type: String,
       enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
     },
+    chip: {
+      type: String,
+      enum: [
+        "Core i3",
+        "Core i5",
+        "Core i7",
+        "Core i9",
+        "Ryzen 5",
+        "Ryzen 7",
+        "Ryzen 9",
+        "Apple M1",
+        "Apple M2",
+      ],
+    },
+    ram: {
+      type: String,
+      enum: ["8GB", "16GB", "32GB", "64GB"],
+    },
+    rom: {
+      type: String,
+      enum: ["128Gb", "256GB", "512Gb", "1TB", "2TB"],
+    },
+    display: {
+      type: String,
+      enum: ["13,3 inh", "14 inh", "15.6 inh", "16 inh"],
+    },
     ratings: [
       {
         star: Number,
