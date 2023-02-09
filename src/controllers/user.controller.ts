@@ -76,7 +76,7 @@ module.exports = {
   saveAddress: async function (req: Request, res: Response) {
     const userAddress = await User.findOneAndUpdate(
       { email: req.user.email },
-      { address: req.body.address }
+      { address: req.body.address, phone: req.body.phone }
     ).exec();
 
     res.json({ ok: true });

@@ -9,6 +9,9 @@ import subCategoryRouter from "./src/routes/subCategory.route";
 import productRouter from "./src/routes/product.route";
 import cloudinaryRouter from "./src/routes/cloudinary";
 import orderRouter from "./src/routes/admin.route";
+import stripeRouter from "./src/routes/stripe.route";
+import couponRouter from "./src/routes/coupon.route";
+import userRouter from "./src/routes/user.route";
 require("dotenv").config();
 
 //app
@@ -38,6 +41,9 @@ app.use("/api", subCategoryRouter);
 app.use("/api", productRouter);
 app.use("/api", cloudinaryRouter);
 app.use("/api", orderRouter);
+app.use("/api", userRouter);
+app.use("/api", stripeRouter);
+app.use("/api", couponRouter);
 
 const port = process.env.PORT || 8080;
 
