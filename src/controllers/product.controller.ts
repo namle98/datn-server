@@ -177,6 +177,14 @@ module.exports = {
       .exec();
     res.json(products);
   },
+  getsAll: async function (req: Request, res: Response) {
+    let products = await Product.find({})
+      .populate("category")
+      .populate("subs")
+      .sort([["createdAt", "desc"]])
+      .exec();
+    res.json(products);
+  },
   remove: async function (req: Request, res: Response) {
     try {
       const deleted = await Product.findOneAndRemove({

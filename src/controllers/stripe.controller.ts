@@ -22,7 +22,7 @@ module.exports = {
     let finalAmount = 0;
 
     if (couponApplied && totalAfterDiscount) {
-      finalAmount = totalAfterDiscount * 100;
+      finalAmount = Math.round(totalAfterDiscount * 100);
     } else {
       finalAmount = cartTotal * 100;
     }

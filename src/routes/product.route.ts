@@ -10,6 +10,7 @@ const {
   productStar,
   listRelated,
   searchFilters,
+  getsAll,
 } = require("../controllers/product.controller");
 const router = Router();
 //middlewares
@@ -19,6 +20,7 @@ router.post("/product", authCheck, adminCheck, create);
 router.get("/products/total", productsCount);
 
 router.get("/products/:page", listAll); // products/100
+router.get("/products", getsAll);
 router.delete("/product/:slug", authCheck, adminCheck, remove);
 router.get("/product/:slug", read);
 router.put("/product/:slug", authCheck, adminCheck, update);
