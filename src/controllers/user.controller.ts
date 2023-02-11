@@ -4,7 +4,7 @@ const Product = require("../models/product.model");
 const Cart = require("../models/cart.model");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
-const uniqueid = require("uniqueid");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   userCart: async function (req: Request, res: Response) {
@@ -150,6 +150,7 @@ module.exports = {
     let user = await User.findOne({ email: req.user.email }).exec();
 
     let userOrders = await Order.find({ orderdBy: user._id })
+      .sort("-createdAt")
       .populate("products.product")
       .exec();
 
@@ -203,7 +204,7 @@ module.exports = {
     let newOrder = await new Order({
       products: userCart.products,
       paymentIntent: {
-        id: uniqueid(),
+        id: uuidv4(),
         amount: finalAmount,
         currency: "usd",
         status: "Cash On Delivery",

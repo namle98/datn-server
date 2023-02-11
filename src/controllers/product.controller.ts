@@ -165,8 +165,12 @@ module.exports = {
     }
   },
   listAll: async function (req: Request, res: Response) {
+    const page = req.params.page;
+    const currentPage = parseInt(page) || 1;
+    const perPage = 12; // 3
     let products = await Product.find({})
-      .limit(parseInt(req.params.count))
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
       .populate("category")
       .populate("subs")
       .sort([["createdAt", "desc"]])
