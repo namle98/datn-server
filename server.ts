@@ -20,7 +20,7 @@ const app = express();
 //db
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL || "")
+  .connect(process.env.MONGODB_URI || "")
   .then(() => {
     console.log("DB connected");
   })
