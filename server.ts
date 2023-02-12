@@ -19,16 +19,18 @@ const app = express();
 
 //db
 
-mongoose
-  .connect(
-    "mongodb+srv://nam280798datn:nam28071998@cluster0.ovxedmn.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("DB connected");
-  })
-  .catch((err: any) => {
-    console.log("DB connection err", err);
-  });
+const connectionString = process.env.MONGODB_URI;
+
+if (connectionString) {
+  mongoose
+    .connect(connectionString)
+    .then(() => {
+      console.log("DB connected");
+    })
+    .catch((err: any) => {
+      console.log("DB connection err", err);
+    });
+}
 
 // middlewares
 
