@@ -45,6 +45,6 @@ app.use("/api", userRouter);
 app.use("/api", stripeRouter);
 app.use("/api", couponRouter);
 
-const port = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
