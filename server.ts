@@ -20,7 +20,9 @@ const app = express();
 //db
 
 mongoose
-  .connect(process.env.MONGODB_URI || "")
+  .connect(
+    "mongodb+srv://nam280798datn:nam28071998@cluster0.ovxedmn.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DB connected");
   })
