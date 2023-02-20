@@ -28,6 +28,8 @@ const orderSchema = new mongoose.Schema(
       ],
     },
     orderdBy: { type: ObjectId, ref: "User" },
+    address: String,
+    phone: String,
   },
   { timestamps: true }
 );

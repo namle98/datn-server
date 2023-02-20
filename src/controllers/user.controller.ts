@@ -119,6 +119,7 @@ module.exports = {
   },
   createOrder: async function (req: Request, res: Response) {
     const { paymentIntent } = req.body.stripeResponse;
+    const { phone, address } = req.body;
 
     const user = await User.findOne({ email: req.user.email }).exec();
 
@@ -128,6 +129,8 @@ module.exports = {
       products,
       paymentIntent,
       orderdBy: user._id,
+      phone: phone,
+      address,
     }).save();
 
     // decrement quantity, increment sold
@@ -184,7 +187,7 @@ module.exports = {
     res.json({ ok: true });
   },
   createCashOrder: async function (req: Request, res: Response) {
-    const { COD, couponApplied } = req.body;
+    const { COD, couponApplied, phone, address } = req.body;
     // if COD is true, create order with status of Cash On Delivery
 
     if (!COD) return res.status(400).send("Create cash order failed");
@@ -213,6 +216,8 @@ module.exports = {
       },
       orderdBy: user._id,
       orderStatus: "Cash On Delivery",
+      phone: phone,
+      address: address,
     }).save();
 
     // decrement quantity, increment sold
