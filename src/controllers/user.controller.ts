@@ -131,6 +131,7 @@ module.exports = {
       orderdBy: user._id,
       phone: phone,
       address,
+      orderdByName: user.name,
     }).save();
 
     // decrement quantity, increment sold
@@ -218,6 +219,7 @@ module.exports = {
       orderStatus: "Cash On Delivery",
       phone: phone,
       address: address,
+      orderdByName: user.name,
     }).save();
 
     // decrement quantity, increment sold
