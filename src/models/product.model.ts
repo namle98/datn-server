@@ -56,7 +56,7 @@ const productSchema = new mongoose.Schema(
     },
     brand: {
       type: String,
-      enum: ["Apple", "LG", "Microsoft", "Lenovo", "ASUS"],
+      enum: ["Apple", "LG", "Dell", "Lenovo", "ASUS"],
     },
     chip: {
       type: String,
