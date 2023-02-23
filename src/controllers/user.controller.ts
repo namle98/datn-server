@@ -204,6 +204,7 @@ module.exports = {
     } else {
       finalAmount = userCart.cartTotal * 100;
     }
+    const createdPayment = Date.now() / 1000;
 
     let newOrder = await new Order({
       products: userCart.products,
@@ -212,7 +213,7 @@ module.exports = {
         amount: finalAmount,
         currency: "usd",
         status: "Cash On Delivery",
-        created: Date.now(),
+        created: parseInt(createdPayment.toString(), 10),
         payment_method_types: ["cash"],
       },
       orderdBy: user._id,
