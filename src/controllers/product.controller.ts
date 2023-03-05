@@ -167,7 +167,7 @@ module.exports = {
   listAll: async function (req: Request, res: Response) {
     const page = req.params.page;
     const currentPage = parseInt(page) || 1;
-    const perPage = 12; // 3
+    const perPage = 12;
     let products = await Product.find({})
       .skip((currentPage - 1) * perPage)
       .limit(perPage)

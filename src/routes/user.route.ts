@@ -11,6 +11,7 @@ const {
   wishlist,
   removeFromWishlist,
   createCashOrder,
+  ordersCount,
 } = require("../controllers/user.controller");
 
 const router = Router();
@@ -26,6 +27,7 @@ router.post("/user/address", authCheck, saveAddress);
 router.post("/user/order", authCheck, createOrder); // stripe
 router.post("/user/cash-order", authCheck, createCashOrder); // cod
 router.get("/user/orders", authCheck, orders);
+router.get("/user/orders-count/:page", authCheck, ordersCount);
 
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);

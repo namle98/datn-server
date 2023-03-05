@@ -160,6 +160,24 @@ module.exports = {
 
     res.json(userOrders);
   },
+
+  ordersCount: async function (req: Request, res: Response) {
+    const page = req.params.page;
+    const currentPage = parseInt(page) || 1;
+    const perPage = 3;
+
+    let user = await User.findOne({ email: req.user.email }).exec();
+
+    let userOrders = await Order.find({ orderdBy: user._id })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
+      .sort("-createdAt")
+      .populate("products.product")
+      .exec();
+
+    res.json(userOrders);
+  },
+
   addToWishlist: async function (req: Request, res: Response) {
     const { productId } = req.body;
 

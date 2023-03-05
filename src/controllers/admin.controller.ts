@@ -11,6 +11,19 @@ module.exports = {
 
     res.json(allOrders);
   },
+  ordersCount: async function (req: Request, res: Response) {
+    const page = req.params.page;
+    const currentPage = parseInt(page) || 1;
+    const perPage = 3;
+    let allOrders = await Order.find({})
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
+      .sort("-createdAt")
+      .populate("products.product")
+      .exec();
+
+    res.json(allOrders);
+  },
   orderStatus: async function (req: Request, res: Response) {
     const { orderId, orderStatus } = req.body;
 
