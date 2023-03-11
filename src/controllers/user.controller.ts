@@ -5,6 +5,24 @@ const Cart = require("../models/cart.model");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 const { v4: uuidv4 } = require("uuid");
+import nodeMailer from "nodemailer";
+
+let mailTransporter = nodeMailer.createTransport({
+  service: "gmail",
+  // host: "mail.openjavascript.info",
+  // secure: true,
+  auth: {
+    user: "accmycomputershop@gmail.com",
+    pass: "avvfpvjpaqmcdtlh",
+  },
+});
+
+let detailsMsgMail = {
+  from: "accmycomputershop@gmail.com",
+  to: "lephuongnam2807@gmail.com",
+  subject: "New order",
+  html: "<p>There are new orders, please visit the link below for details</p> <br/> <a href='https://datn-namlp-client.herokuapp.com/admin/order'>Click here</a>",
+};
 
 module.exports = {
   userCart: async function (req: Request, res: Response) {
@@ -134,6 +152,14 @@ module.exports = {
       orderdByName: user.name,
     }).save();
 
+    mailTransporter.sendMail(detailsMsgMail, (err: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("send mail successfully");
+      }
+    });
+
     // decrement quantity, increment sold
     let bulkOption = products.map((item: any) => {
       return {
@@ -240,6 +266,14 @@ module.exports = {
       address: address,
       orderdByName: user.name,
     }).save();
+
+    mailTransporter.sendMail(detailsMsgMail, (err: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("send mail successfully");
+      }
+    });
 
     // decrement quantity, increment sold
     let bulkOption = userCart.products.map((item: any) => {
