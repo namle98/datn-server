@@ -6,6 +6,7 @@ const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 const { v4: uuidv4 } = require("uuid");
 import nodeMailer from "nodemailer";
+require("dotenv").config();
 
 let mailTransporter = nodeMailer.createTransport({
   service: "gmail",
@@ -13,7 +14,7 @@ let mailTransporter = nodeMailer.createTransport({
   // secure: true,
   auth: {
     user: "accmycomputershop@gmail.com",
-    pass: "avvfpvjpaqmcdtlh",
+    pass: process.env.PASSMAIL,
   },
 });
 
