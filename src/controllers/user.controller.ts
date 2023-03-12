@@ -18,11 +18,58 @@ let mailTransporter = nodeMailer.createTransport({
   },
 });
 
-let detailsMsgMail = {
-  from: "accmycomputershop@gmail.com",
-  to: "lephuongnam2807@gmail.com",
-  subject: "New order",
-  html: "<p>There are new orders, please visit the link below for details</p> <br/> <a href='https://datn-namlp-client.herokuapp.com/admin/order'>Click here</a>",
+const msgMail = (orderBy: string) => {
+  let detailsMsgMail = {
+    from: "accmycomputershop@gmail.com",
+    to: "lephuongnam2807@gmail.com",
+    subject: "New order",
+    html: `<p>There are new orders by ${orderBy}, please visit the link below for details</p> <br/> <a href='https://datn-namlp-client.herokuapp.com/admin/order'>Click here</a>`,
+  };
+  return detailsMsgMail;
+};
+
+const msgMailToUser = (products: any, to: string) => {
+  let detailsMsgMailToUser = {
+    from: "accmycomputershop@gmail.com",
+    to: to,
+    subject: "Order Success",
+    html: `
+      <p>
+You have successfully ordered the following products. Thank you for shopping with us.</p>
+<br/>
+      <table>
+      <thead>
+        <tr>
+          <th style="margin-right: 10px">Image</th>
+          <th style="margin-right: 10px">Title</th>
+          <th style="margin-right: 10px">Price</th>
+          <th style="margin-right: 10px">Brand</th>
+          <th style="margin-right: 10px">Color</th>
+          <th style="margin-right: 10px">Count</th>
+        </tr>
+      </thead>
+
+     
+        <tbody>
+        ${products?.map(
+          (p: any) =>
+            `
+          <tr>
+          <td> <img src = ${p.images} style="width:200px; height: 200px; object-fit: cover; padding: 10px;"/> </td>
+           <td style="padding: 10px;">${p.title}</td>
+            <td style="padding: 10px;">$${p.price}</td> 
+            <td style="padding: 10px;">${p.brand}</td>
+             <td style="padding: 10px;"> ${p.color} </td>
+              <td style="padding: 10px;"> ${p.count} </td>
+          </tr>
+          `
+        )}
+          
+        </tbody>
+  
+    </table>`,
+  };
+  return detailsMsgMailToUser;
 };
 
 module.exports = {
@@ -47,6 +94,9 @@ module.exports = {
       let object: any = {};
 
       object.product = cart[i]._id;
+      object.images = cart[i].images[0].url;
+      object.title = cart[i].title;
+      object.brand = cart[i].brand;
       object.count = cart[i].count;
       object.color = cart[i].color;
       // get price for creating total
@@ -153,7 +203,18 @@ module.exports = {
       orderdByName: user.name,
     }).save();
 
-    mailTransporter.sendMail(detailsMsgMail, (err: any) => {
+    mailTransporter.sendMail(
+      msgMailToUser(products, req.user.email),
+      (err: any) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("send mail to user successfully");
+        }
+      }
+    );
+
+    mailTransporter.sendMail(msgMail(user.name), (err: any) => {
       if (err) {
         console.log(err);
       } else {
@@ -268,7 +329,18 @@ module.exports = {
       orderdByName: user.name,
     }).save();
 
-    mailTransporter.sendMail(detailsMsgMail, (err: any) => {
+    mailTransporter.sendMail(
+      msgMailToUser(userCart.products, req.user.email),
+      (err: any) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("send mail to user successfully");
+        }
+      }
+    );
+
+    mailTransporter.sendMail(msgMail(user.name), (err: any) => {
       if (err) {
         console.log(err);
       } else {
