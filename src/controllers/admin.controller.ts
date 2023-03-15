@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 const Order = require("../models/order");
 const User = require("../models/user.model");
+const Product = require("../models/product.model");
 
 module.exports = {
   orders: async function (req: Request, res: Response) {
@@ -33,6 +34,28 @@ module.exports = {
       { new: true }
     ).exec();
 
+    if (orderStatus === "Cancelled") {
+      let order = await Order.findById(orderId).exec();
+      if (order) {
+        order.products.forEach(async (element: any) => {
+          let products = await Product.findById(element.product).exec();
+
+          await Product.bulkWrite(
+            [
+              {
+                updateOne: {
+                  filter: { _id: products._id }, // IMPORTANT item.product
+                  update: {
+                    $inc: { quantity: +element.count, sold: -element.count },
+                  },
+                },
+              },
+            ],
+            {}
+          );
+        });
+      }
+    }
     res.json(updated);
   },
   getAllUser: async function (req: Request, res: Response) {
