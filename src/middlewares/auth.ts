@@ -13,6 +13,7 @@ module.exports = {
       next();
     } catch (error) {
       res.status(401).json({
+        status: 401,
         err: "Invalid or expired token",
       });
     }
